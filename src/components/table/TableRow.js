@@ -5,7 +5,10 @@ import Modal from '../modal/Modal';
 const TableRow = ({row}) => {
 
   const [isShown, setIsShown] = useState(false);
-  const hide = () => setIsShown(false);
+  const hide = (e) =>{
+    e.stopPropagation();
+    setIsShown(false);
+  }
   const show = () => setIsShown(true);
 
   const {name, city, postTitle, postBody, postComments, postId} = row;

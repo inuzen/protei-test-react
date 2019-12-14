@@ -15,7 +15,7 @@ Username | City | Publication title | Number of comments
  - No UI frameworks
 
  - Clicking on table header sorts contents
- - Repeat clicks change the sorting sorting direction
+ - Repeat clicks change the sorting direction
  - Sorting order represented by an icon
  - Currently sorted table header must be highlighted in bold font
 

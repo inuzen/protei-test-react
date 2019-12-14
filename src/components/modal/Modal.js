@@ -10,14 +10,9 @@ const Modal = (props) => {
 
   const {title, body, comments, hide} = props;
 
-    console.log(title);
-    console.log(body);
-    console.log(comments);
-    console.log(hide);
-
   return (ReactDOM.createPortal(<div onClick={hide} className='modal'>
-    <div className='modal__content-wrapper'>
-      <span className='modal-close' onClick={hide}>✖</span>
+    <div className='modal__content-wrapper' onClick={e => e.stopPropagation()}>
+      <span className='modal-close' onClick={hide} >✖</span>
 
       <div className='header-container'>
           <h3 className='post-header'>{title}</h3>
