@@ -49,21 +49,16 @@ const JsonState = (props) => {
       const resPosts = await fetch(`/posts`);
       const posts = await resPosts.json();
 
-      //create array of post objects with id and related comments
-      let postsWithComments = await Promise.all(posts.map(async (post) => {
-        try {
+      const resComments = await fetch(`/comments`);
+      const comments = await resComments.json();
 
-          const result = await fetch(`/comments?postId=${post.id}`);
-          const comments = await result.json();
-          return {
-            ...post,
-            comments
-          }
-        } catch (e) {
-          console.error(e.response.statusText);
-          dispatch({type: ERROR, payload: e.response.statusText})
+
+      const postsWithComments = posts.map(post=>{
+        return {
+          ...post,
+          comments: comments.filter(c => c.postId === post.id)
         }
-      }));
+      });
 
       const data = postsWithComments.reduce((acc, currPost) => {
         const {userId, title, body, comments, id} = currPost;
