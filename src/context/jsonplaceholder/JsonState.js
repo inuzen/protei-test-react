@@ -6,29 +6,47 @@ import {
   SORT_ENTRIES,
   SEARCH_PUBLICATIONS,
   SET_LOADING,
-  ERROR
+  APPLY_FILTERS,
+  SET_SELECT_FILTER
 } from '../types';
 
 const JsonState = (props) => {
   const initialState = {
-    data: null,
     headers: [{
       title: 'Username',
       uniqueName: 'name',
-      isSorted: null
+      isSorted: null,
+      filter: {
+        type: 'select',
+        value: null
+      }
     },{
       title: 'City',
       uniqueName: 'city',
-      isSorted: null
+      isSorted: null,
+      filter: {
+        type: 'select',
+        value: null
+      }
     },{
       title: 'Publication title',
       uniqueName: 'postTitle',
-      isSorted: null
+      isSorted: null,
+      filter: {
+        type: 'search',
+        value: null
+      }
     },{
-      title: 'Number of comments',
-      uniqueName: 'postComments',
-      isSorted: null
+      title: 'Comments',
+      uniqueName: 'commentAmount',
+      isSorted: null,
+      filter: {
+        type: 'none',
+        value: null
+      }
     }],
+    data_cache: null,
+    data: null,
     loading: false,
   }
   const [state, dispatch] = useReducer(JsonReducer, initialState);
@@ -67,6 +85,7 @@ const JsonState = (props) => {
           city: userObj[userId].address.city,
           postTitle: title,
           postBody: body,
+          commentAmount: comments.length,
           postComments: comments,
           postId: id
         }]
@@ -75,18 +94,33 @@ const JsonState = (props) => {
       dispatch({type: GET_DATA, payload: data});
     } catch (e) {
       console.error(e.response.statusText);
-      dispatch({type: ERROR, payload: e.response.statusText})
     }
 
   };
 
   //filter data
-  const filterDataByColumn = sortParams =>{
+  const sortDataByColumn = sortParams =>{
     setLoading();
     //sortBy must be a key in data object
     dispatch({type: SORT_ENTRIES, payload: sortParams});
   }
 
+  const setSelectFilters = filterParams => {
+
+    dispatch({type: SET_SELECT_FILTER, payload: filterParams})
+    filterData();
+  }
+  //filter column by
+  const filterData = () => {
+    setLoading();
+    dispatch({type: APPLY_FILTERS})
+  }
+
+  const searchTextFilter = (text) => {
+    setLoading();
+    filterData()
+    dispatch({type: SEARCH_PUBLICATIONS, payload: text})
+  }
   //Set Loading
   const setLoading = () => {
     dispatch({type: SET_LOADING});
@@ -96,7 +130,8 @@ const JsonState = (props) => {
       data: state.data,
       loading: state.loading,
       headers: state.headers,
-      getData, filterDataByColumn
+      //data_cache: state.data_cache,
+      getData, sortDataByColumn, filterData, searchTextFilter, setSelectFilters
     }}>
 
     {props.children}

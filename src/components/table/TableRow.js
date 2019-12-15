@@ -11,7 +11,7 @@ const TableRow = ({row}) => {
   }
   const show = () => setIsShown(true);
 
-  const {name, city, postTitle, postBody, postComments, postId} = row;
+  const {name, city, postTitle, postBody, postComments, commentAmount} = row;
 
 
   return (
@@ -20,7 +20,7 @@ const TableRow = ({row}) => {
       <td>{city}</td>
       <td className='table__row clickable' onClick={show}>{postTitle}</td>
       {isShown&&<Modal title = {postTitle} body={postBody} comments = {postComments} hide = {hide}/>}
-      <td>{postComments.length}</td>
+      <td>{commentAmount}</td>
     </tr>
   )
 }

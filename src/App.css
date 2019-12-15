@@ -40,14 +40,18 @@ td:hover{
   background-color: rgba(245,222,179,0.5);
 }
 
+.App {
+  padding-top: 20px;
+}
 .table-container{
-  margin: 20px auto;
+  margin: 0 auto;
   width: max-content;
 }
 
 .table__header-item{
   text-align: center;
   cursor: pointer;
+  user-select: none;
   font-weight: 500;
 }
 
@@ -120,6 +124,7 @@ td:hover{
 
 .post-header{
   font-size: 1.6em;
+  letter-spacing: 0.1em;
   margin-bottom: 10px;
   border-bottom: 5px solid wheat;
 }
