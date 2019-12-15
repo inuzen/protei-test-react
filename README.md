@@ -24,4 +24,5 @@ Username | City | Publication title | Number of comments
 - Add filters for columns (done)
 - Add search by text for publications (done)
 Note: I made filters interconnected so it filters based on all of them together.
+
 Also tried to make it scalable instead of just hardcoded values
